@@ -57,6 +57,8 @@ class check_button(Thread):
         
         camera.start_preview()
         time.sleep(3)
+        camera.annotate_text = "@Steinbruchfest 2019"
+        camera.annotate_text_size = 50
         #camera.capture(save_loc_pi + '' + self.my_shot_time + ".JPG")
         camera.capture(save_loc_pi + '' + self.my_shot_time + ".png", format='png')
         camera.stop_preview()
@@ -84,6 +86,7 @@ class check_button(Thread):
 
                 self.labelText.set("Cheeeeese!")
                 
+                time.sleep(1)
                 #when using gphoto2
                 #gp(clearCommand)
                 self.captureImagesPiCamera()
@@ -93,7 +96,7 @@ class check_button(Thread):
                 #self.renameFiles(picID)
                 
                 ##im = Image.open(save_loc_pi + '' + self.my_shot_time + ".JPG")
-                im2 = Image.open(save_loc_pi + '' + self.my_shot_time + ".png")
+                ##im2 = Image.open(save_loc_pi + '' + self.my_shot_time + ".png")
                 
                 
                 #size = 1080, 1080
@@ -102,20 +105,20 @@ class check_button(Thread):
 
 
                 #Watermark setzen!!!
-                watermark = Image.new("RGBA", im2.size)
+                ##watermark = Image.new("RGBA", im2.size)
 
-                waterdraw = ImageDraw.ImageDraw(watermark, "RGBA")
-                my_font = ImageFont.truetype("FreeSans.ttf",50)
+                ##waterdraw = ImageDraw.ImageDraw(watermark, "RGBA")
+                ##my_font = ImageFont.truetype("FreeSans.ttf",50)
                 #waterdraw.text((100,100), "@Steinbruchfest 2018", font=my_font, fill="green")
-                waterdraw.text((0,0), "@Steinbruchfest 2019", font=my_font)
+                ##waterdraw.text((0,0), "@Steinbruchfest 2019", font=my_font)
 
                 #min(x, y), y = 0 nichts, y = 200 voll drauf (und weiss)
-                watermask = watermark.convert("L").point(lambda x: min(x, 255))
+                ##watermask = watermark.convert("L").point(lambda x: min(x, 255))
 
-                watermark.putalpha(watermask)
+                ##watermark.putalpha(watermask)
 
-                im2.paste(watermark, None, watermark)
-                im2.save('watermarked_'+self.my_shot_time+'.jpg')
+                ##im2.paste(watermark, None, watermark)
+                ##im2.save('watermarked_'+self.my_shot_time+'.jpg')
 
                 #watermark setzen vorbei!!! 
                 
