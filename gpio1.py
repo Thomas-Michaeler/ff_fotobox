@@ -29,7 +29,8 @@ downloadCommand = ["--get-all-files"]
 save_loc = "/home/pi/Desktop/images/"
 
 #sav location using pi camera
-save_loc_pi = "/home/pi/Desktop/images/"
+save_loc_pi = "/media/pi/KINGSTON/images/"
+my_help = ""
 
 
 camera = PiCamera()
@@ -55,8 +56,9 @@ class check_button(Thread):
         self.my_shot_time = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
         
         camera.start_preview()
-        time.sleep(5)
-        camera.capture(save_loc_pi + '' + self.my_shot_time + ".JPG")
+        time.sleep(3)
+        #camera.capture(save_loc_pi + '' + self.my_shot_time + ".JPG")
+        camera.capture(save_loc_pi + '' + self.my_shot_time + ".png", format='png')
         camera.stop_preview()
         
     def renameFiles(self, ID):
@@ -89,12 +91,14 @@ class check_button(Thread):
                 
                 #when using gphoto2
                 #self.renameFiles(picID)
-                im = Image.open(self.my_shot_time+'.JPG')
-                im2 = Image.open(self.my_shot_time+'.JPG')
                 
-                size = 1080, 1080
-                im.thumbnail(size)
-                im.save(self.my_shot_time+'.png')
+                ##im = Image.open(save_loc_pi + '' + self.my_shot_time + ".JPG")
+                im2 = Image.open(save_loc_pi + '' + self.my_shot_time + ".png")
+                
+                
+                #size = 1080, 1080
+                #im.thumbnail(size)
+                #im.save(self.my_shot_time+'.png')
 
 
                 #Watermark setzen!!!
@@ -103,7 +107,7 @@ class check_button(Thread):
                 waterdraw = ImageDraw.ImageDraw(watermark, "RGBA")
                 my_font = ImageFont.truetype("FreeSans.ttf",50)
                 #waterdraw.text((100,100), "@Steinbruchfest 2018", font=my_font, fill="green")
-                waterdraw.text((0,0), "@Steinbruchfest 2018", font=my_font)
+                waterdraw.text((0,0), "@Steinbruchfest 2019", font=my_font)
 
                 #min(x, y), y = 0 nichts, y = 200 voll drauf (und weiss)
                 watermask = watermark.convert("L").point(lambda x: min(x, 255))
@@ -115,7 +119,9 @@ class check_button(Thread):
 
                 #watermark setzen vorbei!!! 
                 
-                img = PhotoImage(file=self.my_shot_time+".png") #JPG files don't work!!!
+                #img = PhotoImage(file=self.my_shot_time+".png") #JPG files don't work!!!
+                my_help = save_loc_pi + '' + self.my_shot_time + ".png"
+                img = PhotoImage(file=my_help)
                 
                 self.x.configure(image=img)
                 self.x.image = img
