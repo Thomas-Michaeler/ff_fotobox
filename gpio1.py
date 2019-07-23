@@ -10,6 +10,7 @@ from PIL import ImageDraw
 from PIL import ImageFont
 #from sh import gphoto2 as gp
 from datetime import datetime
+from picamera import PiCamera
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(16,GPIO.IN)
@@ -24,7 +25,14 @@ clearCommand = ["--folder", "/store_00020001/DCIM/100CANON", \
 triggerCommand = ["--trigger-capture"]
 downloadCommand = ["--get-all-files"]
 
+#save location using gphoto2
 save_loc = "/home/pi/Desktop/images/"
+
+#sav location using pi camera
+save_loc_pi = "/home/pi/Desktop/images/"
+
+
+camera = PiCamera()
 
 class check_button(Thread):
 
@@ -42,7 +50,15 @@ class check_button(Thread):
         time.sleep(3)
         #gp(downloadCommand)
         #gp(clearCommand)
-
+        
+    def captureImagesPiCamera(self):
+        self.my_shot_time = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+        
+        camera.start_preview()
+        time.sleep(5)
+        camera.capture(save_loc_pi + '' + self.my_shot_time + ".JPG")
+        camera.stop_preview()
+        
     def renameFiles(self, ID):
         for filename in os.listdir("."):
             if len(filename) < 13:
@@ -65,12 +81,14 @@ class check_button(Thread):
                     
 
                 self.labelText.set("Cheeeeese!")
-            
+                
+                #when using gphoto2
                 #gp(clearCommand)
-                self.captureImages()
+                self.captureImagesPiCamera()
                 self.labelText.set("Bitte warten!....")
                 
-                self.renameFiles(picID)
+                #when using gphoto2
+                #self.renameFiles(picID)
                 im = Image.open(self.my_shot_time+'.JPG')
                 im2 = Image.open(self.my_shot_time+'.JPG')
                 
