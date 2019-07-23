@@ -1,11 +1,10 @@
 # ff_fotobox
 
-test
-test commit
-
 (rot) widerstand --> 3,3 V
+
 (gelb) --> pin
-blau --> ground --> mit diesem anstecken
+
+blau --> ground --> mit diesem Buzzer simulieren
 
 first steps:
 
