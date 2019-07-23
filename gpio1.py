@@ -8,7 +8,7 @@ import time
 from PIL import Image
 from PIL import ImageDraw
 from PIL import ImageFont
-from sh import gphoto2 as gp
+#from sh import gphoto2 as gp
 from datetime import datetime
 
 GPIO.setmode(GPIO.BCM)
@@ -24,7 +24,7 @@ clearCommand = ["--folder", "/store_00020001/DCIM/100CANON", \
 triggerCommand = ["--trigger-capture"]
 downloadCommand = ["--get-all-files"]
 
-save_loc = "/home/pi/Desktop/gphoto2/images/"
+save_loc = "/home/pi/Desktop/images/"
 
 class check_button(Thread):
 
@@ -38,10 +38,10 @@ class check_button(Thread):
     def captureImages(self):
         self.my_shot_time = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
     
-        gp(triggerCommand)
+        #gp(triggerCommand)
         time.sleep(3)
-        gp(downloadCommand)
-        gp(clearCommand)
+        #gp(downloadCommand)
+        #gp(clearCommand)
 
     def renameFiles(self, ID):
         for filename in os.listdir("."):
@@ -66,7 +66,7 @@ class check_button(Thread):
 
                 self.labelText.set("Cheeeeese!")
             
-                gp(clearCommand)
+                #gp(clearCommand)
                 self.captureImages()
                 self.labelText.set("Bitte warten!....")
                 
@@ -87,7 +87,7 @@ class check_button(Thread):
                 #waterdraw.text((100,100), "@Steinbruchfest 2018", font=my_font, fill="green")
                 waterdraw.text((0,0), "@Steinbruchfest 2018", font=my_font)
 
-                #min(x, y), y = 0 nichts, y = 200 voll drauf (und weiß)
+                #min(x, y), y = 0 nichts, y = 200 voll drauf (und weiss)
                 watermask = watermark.convert("L").point(lambda x: min(x, 255))
 
                 watermark.putalpha(watermask)
@@ -105,14 +105,14 @@ class check_button(Thread):
                 self.b = True
 
                 #Dropbox-Upload
-                photofile = "/home/pi/Dropbox-Uploader/dropbox_uploader.sh upload /home/pi/Desktop/gphoto2/images/watermarked_"+self.my_shot_time+".jpg /Steinbruchfest_2018/Steinbruchfest_2018_"+self.my_shot_time+".jpg"
-                subprocess.call([photofile], shell=True)
+                #photofile = "/home/pi/Dropbox-Uploader/dropbox_uploader.sh upload /home/pi/Desktop/gphoto2/images/watermarked_"+self.my_shot_time+".jpg /Steinbruchfest_2018/Steinbruchfest_2018_"+self.my_shot_time+".jpg"
+                #subprocess.call([photofile], shell=True)
                     
                 time.sleep(5)
             else:
                 self.x.configure(image='')
                 
-                self.labelText.set("Bitte auf Buzzer drücken")
+                self.labelText.set("Bitte auf Buzzer druecken")
                 self.b = False
                 
 
